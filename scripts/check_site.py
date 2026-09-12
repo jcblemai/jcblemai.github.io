@@ -8,6 +8,8 @@ import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'dist'
+SITE_URL = next(line.split(': ', 1)[1].strip().strip('\"\'') for line in (ROOT / '_config.yml').read_text().splitlines() if line.startswith('url: '))
+SITE_HOST = urlparse(SITE_URL).netloc
 
 class Links(HTMLParser):
     def __init__(self):
@@ -25,10 +27,10 @@ for page in pages:
     parser = Links()
     source = page.read_text()
     parser.feed(source)
-    base = 'https://jcblemai.github.io/' + page.relative_to(OUT).as_posix()
+    base = SITE_URL.rstrip('/') + '/' + page.relative_to(OUT).as_posix()
     for raw in parser.urls:
         url = urlparse(urljoin(base, raw))
-        if url.scheme not in ('http', 'https') or url.netloc != 'jcblemai.github.io':
+        if url.scheme not in ('http', 'https') or url.netloc != SITE_HOST:
             continue
         path = OUT / unquote(url.path).lstrip('/')
         if path.is_dir():
