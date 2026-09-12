@@ -1,0 +1,7 @@
+---
+layout: null
+render_with_liquid: true
+---
+User-agent: *
+Allow: /
+Sitemap: {{ '/sitemap.xml' | absolute_url }}

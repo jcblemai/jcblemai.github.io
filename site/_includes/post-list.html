@@ -1,0 +1,8 @@
+<div class="post-list">
+{% for post in include.posts %}
+<article class="post-row">
+  <time class="meta" datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: '%b %-d, %Y' }}</time>
+  <div><h2><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h2><p>{{ post.excerpt | strip_html | normalize_whitespace | truncate: 180 }}</p></div>
+</article>
+{% endfor %}
+</div>

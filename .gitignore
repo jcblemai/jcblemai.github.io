@@ -1,0 +1,13 @@
+.DS_Store
+dist/
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.bundle/
+vendor/
+__pycache__/
+# The full archive and unpublished writing remain local.
+wordpress archive/
+draft/
+private/
+migration-manifest.json

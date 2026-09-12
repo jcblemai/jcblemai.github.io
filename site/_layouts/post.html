@@ -1,0 +1,8 @@
+---
+layout: default
+---
+<article class="prose">
+  <h1>{{ page.title | escape }}</h1>
+  <p class="meta"><time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: '%B %-d, %Y' }}</time>{% if page.categories.size > 0 %} · {{ page.categories | join: ', ' | escape }}{% endif %}</p>
+  {{ content }}
+</article>

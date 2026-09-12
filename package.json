@@ -1,0 +1,9 @@
+{
+  "name": "joseph-lemaitre-website",
+  "private": true,
+  "scripts": {
+    "dev": "bash scripts/jekyll.sh serve --host 127.0.0.1 --port 1313",
+    "build": "JEKYLL_ENV=production bash scripts/jekyll.sh build",
+    "check": "python3 scripts/check_site.py"
+  }
+}

@@ -1,0 +1,32 @@
+title: Joseph Lemaitre
+description: Researcher in infectious disease dynamics. Models, methods, and notes.
+url: https://josephlemaitre.com
+baseurl: ""
+source: site
+destination: dist
+encoding: utf-8
+markdown: kramdown
+highlighter: rouge
+permalink: /:year/:month/:title/
+strict_front_matter: true
+future: false
+show_drafts: false
+unpublished: false
+exclude: [draft, private, vendor, node_modules]
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+feed:
+  path: posts/index.xml
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: page
+navigation:
+  - title: About
+    url: /
+  - title: Posts
+    url: /posts/
+  - title: Atomic posts
+    url: /atomic-posts/
