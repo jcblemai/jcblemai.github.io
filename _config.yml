@@ -1,6 +1,6 @@
 title: Joseph Lemaitre
 description: Researcher in infectious disease dynamics. Models, methods, and notes.
-url: https://josephlemaitre.com
+url: https://jcblemai.github.io
 baseurl: ""
 source: site
 destination: dist
@@ -12,12 +12,10 @@ strict_front_matter: true
 future: false
 show_drafts: false
 unpublished: false
-exclude: [draft, private, vendor, node_modules]
+# Keep post sources and categories, but omit both sections from the public build.
+exclude: [draft, private, vendor, node_modules, _posts, pages/posts.md, pages/atomic-posts.md]
 plugins:
-  - jekyll-feed
   - jekyll-sitemap
-feed:
-  path: posts/index.xml
 defaults:
   - scope:
       path: ""
@@ -26,7 +24,3 @@ defaults:
 navigation:
   - title: About
     url: /
-  - title: Posts
-    url: /posts/
-  - title: Atomic posts
-    url: /atomic-posts/

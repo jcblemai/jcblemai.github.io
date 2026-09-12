@@ -25,10 +25,10 @@ for page in pages:
     parser = Links()
     source = page.read_text()
     parser.feed(source)
-    base = 'https://josephlemaitre.com/' + page.relative_to(OUT).as_posix()
+    base = 'https://jcblemai.github.io/' + page.relative_to(OUT).as_posix()
     for raw in parser.urls:
         url = urlparse(urljoin(base, raw))
-        if url.scheme not in ('http', 'https') or url.netloc != 'josephlemaitre.com':
+        if url.scheme not in ('http', 'https') or url.netloc != 'jcblemai.github.io':
             continue
         path = OUT / unquote(url.path).lstrip('/')
         if path.is_dir():
@@ -49,7 +49,7 @@ if manifest.exists():
     for entry in entries:
         assert (ROOT / entry['file']).is_file(), entry
         route = urlparse(entry['original_url'])
-        if entry['status'] == 'publish':
+        if entry['status'] == 'publish' and entry['type'] == 'page' and entry['id'] not in (9, 137):
             assert (OUT / route.path.lstrip('/') / 'index.html').is_file(), entry
         elif not route.query:
             assert not (OUT / route.path.lstrip('/') / 'index.html').exists(), entry
@@ -62,9 +62,15 @@ if manifest.exists():
         for para in body.split('\n\n'):
             if len(para) > 100 and '<' not in para and '[' not in para:
                 assert para not in all_output, f'Unpublished content exposed: {entry["file"]}'
-for name in ('posts/index.xml', 'sitemap.xml'):
+for name in ('sitemap.xml',):
     ET.parse(OUT / name)
 assert len(list((ROOT/'site/_posts').glob('*.md'))) == 7
 if errors:
     raise SystemExit('\n'.join(errors))
-print(f'PASS: {len(pages)} HTML pages; all 11 original public URLs; local links/assets; feeds; private-content exclusion.')
+assert not (OUT/'posts').exists()
+assert not (OUT/'atomic-posts').exists()
+for post in (ROOT/'site/_posts').glob('*.md'):
+    meta = post.read_text().split('---', 2)[1]
+    permalink = json.loads(next(line.split(': ',1)[1] for line in meta.splitlines() if line.startswith('permalink:')))
+    assert not (OUT/permalink.lstrip('/')/'index.html').exists()
+print(f'PASS: {len(pages)} HTML pages; links/assets; sitemap; posts and private content excluded.')
